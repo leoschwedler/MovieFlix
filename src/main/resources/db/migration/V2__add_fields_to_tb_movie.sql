@@ -1,0 +1,9 @@
+
+ALTER TABLE tb_movie
+ADD COLUMN release_date DATE,
+ADD COLUMN rating NUMERIC,
+ADD COLUMN created_at TIMESTAMP,
+ADD COLUMN updated_at TIMESTAMP;
+
+
+
