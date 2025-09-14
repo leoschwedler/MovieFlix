@@ -1,15 +1,13 @@
 package br.com.movieflix.movie.controller;
 
+import br.com.movieflix.category.model.CategoryEntity;
 import br.com.movieflix.movie.dto.MovieDTO;
-import br.com.movieflix.movie.model.MovieEntity;
 import br.com.movieflix.movie.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/movie")
@@ -37,6 +35,18 @@ public class MovieController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> getMovieByCategory(@RequestParam List<Long> categoryId){
+        List<MovieDTO> movies = service.getMovieByCategory(categoryId);
+        if (movies != null){
+            return ResponseEntity.ok(movies);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O filme com o ID: " + categoryId + " nao existe nos nossos registros");
+        }
+    }
+
+
+
     @PostMapping("/create")
     public ResponseEntity<MovieDTO> createMovie(@RequestBody MovieDTO movieDTO){
         MovieDTO movie = service.createMovie(movieDTO);
@@ -52,5 +62,17 @@ public class MovieController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("O filme com o ID: " + id + " nao existe nos nossos registros");
         }
+    }
+
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateMovie(@PathVariable Long id,@RequestBody MovieDTO movieDTO){
+       MovieDTO movie = service.updateMovie(id, movieDTO);
+       if (movie != null){
+           return ResponseEntity.ok(movie);
+       }else {
+           return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                   .body("O filme com o ID: " + id + " nao existe nos nossos registros");
+       }
     }
 }
