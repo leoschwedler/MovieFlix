@@ -3,5 +3,5 @@ package br.com.movieflix.user.dto;
 import lombok.Builder;
 
 @Builder
-public record UserResponseDTO(Long id, String name, String email) {
+public record UserLoginRequestDTO (String email, String password){
 }

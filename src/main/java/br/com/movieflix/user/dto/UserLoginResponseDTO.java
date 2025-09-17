@@ -1,0 +1,8 @@
+package br.com.movieflix.user.dto;
+
+import lombok.Builder;
+
+@Builder
+public record UserLoginResponseDTO (String token){
+
+}
