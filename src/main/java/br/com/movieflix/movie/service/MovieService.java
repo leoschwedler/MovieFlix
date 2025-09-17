@@ -12,6 +12,7 @@ import br.com.movieflix.streaming.dto.StreamingDTO;
 import br.com.movieflix.streaming.mapper.StreamingMapper;
 import br.com.movieflix.streaming.model.StreamingEntity;
 import br.com.movieflix.streaming.service.StreamingService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
