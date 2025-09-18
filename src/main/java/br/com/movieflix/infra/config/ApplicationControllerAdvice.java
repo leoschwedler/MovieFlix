@@ -1,4 +1,4 @@
-package br.com.movieflix.infra.security;
+package br.com.movieflix.infra.config;
 
 import br.com.movieflix.exceptions.UsernameOrPasswordInvalidException;
 import org.springframework.http.HttpStatus;
