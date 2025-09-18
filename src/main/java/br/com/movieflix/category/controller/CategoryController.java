@@ -2,6 +2,7 @@ package br.com.movieflix.category.controller;
 
 import br.com.movieflix.category.dto.CategoryDTO;
 import br.com.movieflix.category.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,8 @@ public class CategoryController {
     }
 
 
-    @PostMapping("create")
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO category) {
+    @PostMapping("/create")
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO category) {
         CategoryDTO categoryDto = service.createCategory(category);
       return   ResponseEntity.status(HttpStatus.CREATED).body(categoryDto);
     }

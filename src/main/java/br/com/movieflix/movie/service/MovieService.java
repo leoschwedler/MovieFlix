@@ -90,10 +90,9 @@ public class MovieService {
     }
 
 
-
-    private List<StreamingEntity> findStreamings(List<StreamingEntity> streamings){
+    private List<StreamingEntity> findStreamings(List<StreamingEntity> streamings) {
         List<StreamingEntity> streamingsFound = new ArrayList<>();
-        for (StreamingEntity streaming : streamings){
+        for (StreamingEntity streaming : streamings) {
             StreamingDTO dto = streamingService.getStreamingById(streaming.getId());
             if (dto != null) {
                 streamingsFound.add(streamingMapper.map(dto));

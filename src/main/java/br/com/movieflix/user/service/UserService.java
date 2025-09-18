@@ -1,5 +1,6 @@
 package br.com.movieflix.user.service;
 
+import br.com.movieflix.exceptions.UsernameOrPasswordInvalidException;
 import br.com.movieflix.infra.security.TokenService;
 import br.com.movieflix.user.dto.UserLoginRequestDTO;
 import br.com.movieflix.user.dto.UserLoginResponseDTO;
@@ -10,6 +11,7 @@ import br.com.movieflix.user.model.UserEntity;
 import br.com.movieflix.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,11 +27,15 @@ public class UserService {
     private final TokenService tokenService;
 
     public UserLoginResponseDTO login(UserLoginRequestDTO request){
-        UsernamePasswordAuthenticationToken userAndPassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-        Authentication authenticate = authenticationManager.authenticate(userAndPassword);
-        UserEntity user = (UserEntity) authenticate.getPrincipal();
-        String token = tokenService.generateToken(user);
-        return new UserLoginResponseDTO(token);
+       try{
+           UsernamePasswordAuthenticationToken userAndPassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+           Authentication authenticate = authenticationManager.authenticate(userAndPassword);
+           UserEntity user = (UserEntity) authenticate.getPrincipal();
+           String token = tokenService.generateToken(user);
+           return new UserLoginResponseDTO(token);
+       }catch (BadCredentialsException exception){
+           throw new UsernameOrPasswordInvalidException("Email or password invalid.");
+       }
     }
 
     public UserRegisterResponseDTO register(UserRegisterRequestDTO request){
